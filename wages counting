@@ -1,0 +1,25 @@
+import csv
+from collections import defaultdict
+
+# Define daily wage per laborer
+DAILY_WAGE = 500  # Example wage, change as needed
+
+csv_filepath = "C:/Users/Vineeth/OneDrive/vineeth/bhashetty/labor_attendance.csv"
+
+# Dictionary to store attendance counts
+attendance_count = defaultdict(set)
+
+# Read attendance data
+with open(csv_filepath, 'r') as f:
+    reader = csv.reader(f)
+    next(reader)  # Skip header row
+    for row in reader:
+        name, date, _ = row
+        attendance_count[name].add(date)  # Unique days per laborer
+
+# Calculate wages
+print("\n--- Laborer Salary Report ---")
+for name, days in attendance_count.items():
+    total_days = len(days)
+    salary = total_days * DAILY_WAGE
+    print(f"{name}: Attended {total_days} days → Salary: ₹{salary}")
